@@ -1,4 +1,7 @@
-<img src="https://habrastorage.org/webt/wq/up/nk/wqupnk_7y-uwjmxmajy8tnp8xqa.png" />
+<p align="center">
+<img src="https://habrastorage.org/webt/wq/up/nk/wqupnk_7y-uwjmxmajy8tnp8xqa.png" 
+width="500px" height="500px"/>
+</p>
 
 # GitHub Auto-commit
 

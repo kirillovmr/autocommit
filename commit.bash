@@ -11,8 +11,8 @@
 # # #
 GITHUB_USERNAME="kirillovmr"
 GITHUB_EMAIL="mr.kirillov@icloud.com"
-REPO_NAME="autocommit"
-COMMITS_PER_DAY=4
+REPO_NAME="autocommit" # Repo which will be used for auto commits
+COMMITS_PER_DAY=4 # number of auto commits per day
 
 _date=`date +%Y-%m-%d`
 _time=`date +%H:%M:%S`

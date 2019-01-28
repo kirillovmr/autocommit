@@ -1,3 +1,5 @@
+<img src="https://habrastorage.org/webt/wq/up/nk/wqupnk_7y-uwjmxmajy8tnp8xqa.png" />
+
 # GitHub Auto-commit
 
 This script is used to automatically make contributions on GitHub and keep up your activity

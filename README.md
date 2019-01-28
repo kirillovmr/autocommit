@@ -12,9 +12,9 @@ I recommend to use [Python Anywhere](https://www.pythonanywhere.com) to schedule
 
 1. [Sign up](https://www.pythonanywhere.com/registration/register/beginner/) for a free beginner plan.
 
-2. Open [dashboard](https://www.pythonanywhere.com/) and create new Bash console by click a button as on a screen or simply [by link](https://www.pythonanywhere.com/)
+2. Open [dashboard](https://www.pythonanywhere.com/) and create new Bash console by click a button as on a screen:
 
-<!-- Step 1 -->
+![Create new Bash Console](https://habrastorage.org/webt/xy/bl/bj/xyblbj0ux6nddbdq3mezollfjze.png)
 
 3. Generate new SSH key console:
 ```bash
@@ -44,14 +44,14 @@ ssh-add -k ~/.ssh/id_rsa
 5. Copy public SSH key
 Now you need to open **Files** page on Python Anywhere and move to **.ssh** folder:
 
-<!-- Step 2 -->
+![Open .ssh folder](https://habrastorage.org/webt/kw/y2/dl/kwy2dl71xx1k_qrwqnpvtnlx6ee.png)
 
 Open file **id_rsa.pub** and copy the wholw contents of this file
 
-<!-- Step 3 -->
+![Open id_rsa.pub](https://habrastorage.org/webt/bl/pm/sw/blpmswq9e2iufeo0oxmgfixqrvu.png)
 
 6. Add SSH key to your GitHUb account
-Go to [Github add SSH page](https://github.com/settings/ssh/new), enter title "PythonAnywhere" and **paste** your **key** to the *key* textarea, click **Save SHH key**
+Go to [Github add SSH page](https://github.com/settings/ssh/new), enter title "PythonAnywhere" and **paste** your **key** to the *key* textarea, click **Save SHH key**.
 
 ## Authors
 

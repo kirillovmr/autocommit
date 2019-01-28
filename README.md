@@ -1,6 +1,6 @@
 # GitHub Auto-commit
 
-This script is used to automatically made contributions on GitHub and keep up your activity
+This script is used to automatically make contributions on GitHub and keep up your activity
 
 ## Getting Started
 

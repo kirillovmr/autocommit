@@ -1,9 +1,9 @@
+# GitHub Auto-commit
+
 <p align="center">
 <img src="https://habrastorage.org/webt/wq/up/nk/wqupnk_7y-uwjmxmajy8tnp8xqa.png" 
 width="500px" height="500px"/>
 </p>
-
-# GitHub Auto-commit
 
 This script is used to automatically make contributions on GitHub and keep up your activity
 

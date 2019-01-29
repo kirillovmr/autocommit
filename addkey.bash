@@ -16,7 +16,8 @@ if [ "${username}" == "" ] || [ "${email}" == "" ]; then
   exit
 fi
 
-keyPath=~/.ssh/id_rsa_${username}
+sshPath=~/.ssh
+keyPath=${sshPath}/id_rsa_${username}
 
 # Check if key exists
 if [ -f ${keyPath} ]; then
@@ -39,6 +40,13 @@ ssh-keygen -t rsa -b 4096 -C ${email} -N "" -f ${keyPath}
 # Adding SSH key to ssh-agent
 eval "$(ssh-agent -s)"
 ssh-add -k ${keyPath}
+
+# Adding rules to config file
+echo -e "\n" >> ${sshPath}/config
+echo "Host ${username}.github.com" >> ${sshPath}/config
+echo "HostName github.com" >> ${sshPath}/config
+echo "PreferredAuthentications publickey" >> ${sshPath}/config
+echo "IdentityFile ${keyPath}" >> ${sshPath}/config
 
 # Output Public SSH key
 echo "$(<${keyPath}.pub)"

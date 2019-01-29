@@ -41,7 +41,7 @@ Enter passphrase (empty for no passphrase): [Type a passphrase]
 Enter same passphrase again: [Type passphrase again]
 ```
 
-4. Add your SSH key to sh-agent
+4. Add your SSH key to ssh-agent
 ```bash
 eval "$(ssh-agent -s)"
 ```

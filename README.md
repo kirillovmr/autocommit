@@ -67,13 +67,9 @@ Go to [Github add SSH page](https://github.com/settings/ssh/new), enter title "P
 curl -O https://raw.githubusercontent.com/kirillovmr/autocommit/master/commit.bash
 ```
 
-8. Go to Files tab, open commit.bash, change settings on the top of the script and press save.
-
-![Script settings](https://habrastorage.org/webt/f2/sq/tz/f2sqtzkfy53g7ypprv1jg2sqmea.png)
-
 9. Go to Tasks tab in PythonAnywhere and schedule a new task with command and press **Create**:
 ``` bash
-bash commit.bash
+bash commit.bash ${YOUR_GITHUB_USERNAME} ${YOUR_GITHUB_EMAIL}
 ```
 
 ![Schedule a task](https://habrastorage.org/webt/sx/up/kl/sxupklp9wielayebyfojb0ndjrm.png)

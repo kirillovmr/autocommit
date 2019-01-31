@@ -1,0 +1,26 @@
+{
+  "name": "autocommit",
+  "version": "1.0.0",
+  "description": "Automatically make contributions on GitHub and keep up your activity",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kirillovmr/autocommit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kirillovmr/autocommit/issues"
+  },
+  "homepage": "https://github.com/kirillovmr/autocommit#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4"
+  }
+}

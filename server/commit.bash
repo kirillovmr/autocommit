@@ -9,14 +9,19 @@
 #
 # Settings
 # # #
-GITHUB_USERNAME="kirillovmr"
-GITHUB_EMAIL="mr.kirillov@icloud.com"
+GITHUB_USERNAME="$1"
+GITHUB_EMAIL="$2"
 REPO_NAME="autocommit" # Repo which will be used for auto commits
 COMMITS_PER_DAY=4 # number of auto commits per day
 
 _date=`date +%Y-%m-%d`
 _time=`date +%H:%M:%S`
 _filename="auto.md"
+_users_folder="users"
+
+# Creating user folder if it does not exists
+mkdir -p "${_users_folder}/${GITHUB_USERNAME}"
+cd "${_users_folder}/${GITHUB_USERNAME}"
 
 #
 # Clonning and setting up repo

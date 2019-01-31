@@ -4,7 +4,8 @@
   "description": "Automatically make contributions on GitHub and keep up your activity",
   "main": "server/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js"
   },
   "repository": {
     "type": "git",

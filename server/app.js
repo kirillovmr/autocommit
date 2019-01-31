@@ -7,19 +7,24 @@ require('dotenv').config();
 
 // Imports
 const { runCommit } = require('./shell');
+const DB = require('./DB');
 
+// Express settings
 const publicPath = path.join(__dirname, '../client/build');
 const port = process.env.PORT || 4000;
-
 const app = express();
 const server = http.createServer(app);
-
 app.use(cors());
 app.use(express.static(publicPath));
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
+
+// Database initialize
+const db = new DB();
+
+
 
 /**
  * GET & POST Methods

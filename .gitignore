@@ -1,2 +1,4 @@
 users/
 node_modules/
+servicekey.json
+.env

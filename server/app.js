@@ -6,7 +6,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 // Imports
-const { runCommit } = require('./shell');
+const { runCommit, generateKey } = require('./shell');
 const DB = require('./DB');
 
 // Express settings
@@ -24,6 +24,25 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 // Database initialize
 const db = new DB();
 
+// Generating ssh-keys if needed
+db.numUnusedKeys().then(unusedKeys => {
+  let numNewKeys = process.env['MAX_KEYS'] - unusedKeys;
+  if (numNewKeys > 0) {
+    console.log(`Generating ${numNewKeys} new keys`);
+
+    // Generating keys
+    while(numNewKeys > 0) {
+      generateKey().then(data => {
+        const [username, key] = data;
+        
+        // Adding key to database
+        db.addUnusedKey(username, key);
+      })
+
+      numNewKeys -= 1;
+    }
+  }
+});
 
 
 /**
@@ -39,7 +58,7 @@ app.post('/test', (req, res) => {
   res.send({
     success: true
   });
-})
+});
 
 server.listen(port, () => {
   console.log(`Server is up on port ${port}`);

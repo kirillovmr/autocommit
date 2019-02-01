@@ -2,7 +2,7 @@ var admin = require('firebase-admin');
 var serviceAccount = require('./servicekey.json');
 require('dotenv').config();
 
-module.exports = class DB {
+class DB {
   constructor() {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
@@ -14,6 +14,13 @@ module.exports = class DB {
   /**
    * Methods to work with keys
    */
+  // Returns number of unused keys
+  async numUnusedKeys() {
+    const data = await this.db.ref("keys").once("value");
+    if(!data.val()) return 0;
+    return Object.keys(data.val()).map(() => 1).length;
+  }
+
   // Returns a promise and key-value
   getUnusedKey() {
     var ref = this.db.ref("keys");
@@ -30,7 +37,7 @@ module.exports = class DB {
     var ref = this.db.ref("keys");
 
     return new Promise((resolve, reject) => {
-      const newRef = ref.push({
+      const newRef = ref.update({
         [username]: key
       });
       resolve(newRef.key);
@@ -68,5 +75,9 @@ module.exports = class DB {
   }
 }
 
+module.exports = DB;
+
 // const db = new DB();
-// db.addUser('kirillovmr2', 'mail@mail.com', 'ssh-key').then(key => console.log(key));
+// db.numUnusedKeys().then(keys => {
+//   console.log(keys);
+// })

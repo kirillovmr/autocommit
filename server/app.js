@@ -10,7 +10,7 @@ const { runCommit, generateKey } = require('./shell');
 const DB = require('./DB');
 
 // Express settings
-const publicPath = path.join(__dirname, '../client/build');
+const publicPath = path.join(__dirname, '../client/public');
 const port = process.env.PORT || 4000;
 const app = express();
 const server = http.createServer(app);

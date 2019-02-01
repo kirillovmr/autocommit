@@ -58,8 +58,8 @@ class DB {
    * Functions to work with users
    */
   // Adds user to database
-  addUser(username, email, sshkey) {
-    if (!username || !email || !sshkey) return false;
+  addUser(username, email, sshName) {
+    if (!username || !email || !sshName) return false;
     var ref = this.db.ref("users");
 
     return new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ class DB {
       ref.update({
         [username]: {
           email: email,
-          key: sshkey
+          sshName: sshName
         }
       });
       resolve(true);

@@ -2,3 +2,4 @@ users/
 node_modules/
 servicekey.json
 .env
+.DS_Store

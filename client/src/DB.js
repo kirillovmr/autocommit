@@ -5,10 +5,8 @@ import config from './firebaseConfig'
 require("firebase/auth");
 require("firebase/database");
 
-export default firebase;
-
-export class DB {
-  constructor(onStateChanged=(user)=>{}) {
+export default class DB {
+  constructor(onStateChanged=()=>{}) {
     this.firebase = firebase;
     this.firebase.initializeApp(config);
 
@@ -35,34 +33,51 @@ export class DB {
     });
   }
 
-  logout(cb =()=>{}) {
+  logout(success=()=>{}, error=()=>{}) {
     this.firebase.auth().signOut()
     .then(() => {
       console.log('User logged out');
       this.user = null;
-      cb();
+      success();
     })
     .catch(e => {
       console.log('Sign out error', e);
+      error();
     })
   }
-}
 
-export function addUserToDB(username, email, githubToken, photoUrl) {
-  const ref = firebase.database().ref('users');
-  return new Promise((resolve, reject) => {
+  addUserToDB(username, userData, success=()=>{}, error=()=>{}) {
+    const ref = this.firebase.database().ref('users');
     ref.update({
-      [username]: {
-        email: email,
-        githubToken: githubToken,
-        photoUrl: photoUrl
-      }
+      [username]: userData
     })
     .then(() => {
-      resolve();
+      console.log(`DB ${username} successfully added to database`);
+      success();
     })
     .catch(e => {
-      reject(e);
+      console.log(`DB error adding ${username} to database`);
+      error(e);
     });
-  })
+  }
+
+  // Returns a promise and key-value
+  getUnusedKey() {
+    var ref = this.firebase.database().ref("keys");
+    return new Promise((resolve, reject) => {
+      ref.limitToLast(1).once("value", function(data) {
+        resolve(data.val());
+      });
+    });
+  }
+
+  // Removes username by key reference
+  removeUnusedKey(keyRef) {
+    var ref = this.firebase.database().ref("keys");
+    return new Promise((resolve, reject) => {
+      ref.child(keyRef).remove(() => {
+        resolve('Removed');
+      })
+    })
+  }
 }

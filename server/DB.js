@@ -21,16 +21,6 @@ class DB {
     return Object.keys(data.val()).map(() => 1).length;
   }
 
-  // Returns a promise and key-value
-  getUnusedKey() {
-    var ref = this.db.ref("keys");
-    return new Promise((resolve, reject) => {
-      ref.limitToLast(1).once("value", function(data) {
-        resolve(data.val());
-      });
-    });
-  }
-
   // Adds new username - sshkey, returns key reference
   addUnusedKey(username, key) {
     if (!username || !key) return false;
@@ -43,41 +33,6 @@ class DB {
       resolve(newRef.key);
     });
   }
-
-  // Removes username by key reference
-  removeUnusedKey(keyRef) {
-    var ref = this.db.ref("keys");
-    return new Promise((resolve, reject) => {
-      ref.child(keyRef).remove(() => {
-        resolve('Removed');
-      })
-    })
-  }
-
-  /**
-   * Functions to work with users
-   */
-  // Adds user to database
-  addUser(username, email, sshName) {
-    if (!username || !email || !sshName) return false;
-    var ref = this.db.ref("users");
-
-    return new Promise((resolve, reject) => {
-      // ref.
-      ref.update({
-        [username]: {
-          email: email,
-          sshName: sshName
-        }
-      });
-      resolve(true);
-    });
-  }
 }
 
 module.exports = DB;
-
-// const db = new DB();
-// db.numUnusedKeys().then(keys => {
-//   console.log(keys);
-// })

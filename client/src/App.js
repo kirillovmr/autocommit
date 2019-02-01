@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
 import DB from './DB';
+import './App.css';
+
+import LandingPage from './Pages/LandingPage';
+import DashboardPage from './Pages/DashboardPage';
+import LoadingPage from './Pages/LoadingPage';
 
 class App extends Component {
   constructor(props) {
@@ -9,14 +13,15 @@ class App extends Component {
     this.db = new DB((user) => {
       if (user) {
         this.setState({
-          isSignedIn: true,
+          initialFetchDone: true,
           userProfile: user
         });
       }
     });
 
     this.state = {
-      isSignedIn: false,
+      initialFetchDone: false,
+      timerDone: false,
       userProfile: null,
       unusedKey: null
     };
@@ -32,10 +37,16 @@ class App extends Component {
       //   console.log('Key romoved');
       // })
     });
+
+    // Loading timer
+    setTimeout(() => {
+      this.setState({
+        timerDone: true
+      });
+    }, 600)
   }
 
   onLoginSuccess(result) {
-    console.log('onLoginSuccess this', this);
     const username = result.additionalUserInfo.username;
     const userData = {
       email: result.user.email,
@@ -45,35 +56,30 @@ class App extends Component {
     this.db.addUserToDB(username, userData);
 
     this.setState({
-      isSignedIn: true,
       userProfile: result.user
     });
   }
 
   onLogOut() {
     this.setState({
-      isSignedIn: false,
       userProfile: null
     });
   }
 
-  renderButtons() {
-    if (!this.state.isSignedIn)
-      return <button onClick={() => this.db.login((result) => this.onLoginSuccess(result))}>Login</button>
+  renderPage() {
+    if (!this.state.initialFetchDone || !this.state.timerDone)
+      return <LoadingPage />
+    if (!this.state.userProfile)
+      return <LandingPage login={() => this.db.login((result) => this.onLoginSuccess(result))} />
     else
-      return <button onClick={() => this.db.logout(() => this.onLogOut())}>Logout</button>
+      return <DashboardPage logout={() => this.db.logout(() => this.onLogOut())} />
   }
 
   render() {
     console.log('Rerender', this.state)
     return (
       <div className="App">
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          {this.renderButtons()}
-        </header>
+        {this.renderPage()}
       </div>
     );
   }

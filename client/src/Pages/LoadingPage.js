@@ -3,6 +3,8 @@ import './loadingPage.css';
 
 export default function LoadingPage() {
   return (
-    <div className="loading-spinner"></div>
+    <div className="text-center">
+      <div className="loading-spinner"></div>
+    </div>
   )
 }

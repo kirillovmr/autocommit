@@ -70,13 +70,15 @@ class App extends Component {
     if (!this.state.initialFetchDone || !this.state.timerDone)
       return <LoadingPage />
     if (!this.state.userProfile)
-      return <LandingPage login={() => this.db.login((result) => this.onLoginSuccess(result))} />
+      return <LandingPage login = {() => this.db.login((result) => this.onLoginSuccess(result))} />
     else
-      return <DashboardPage logout={() => this.db.logout(() => this.onLogOut())} />
+      return <DashboardPage 
+        logout={() => this.db.logout(() => this.onLogOut())}
+        user={this.state.userProfile}
+      />
   }
 
   render() {
-    console.log('Rerender', this.state)
     return (
       <div className="App">
         {this.renderPage()}

@@ -1,10 +1,41 @@
 import React, { Component } from 'react';
 
 import logo from '../img/logo-trans.png';
+import connected from '../img/steroidtocat.png';
+import disconnected from '../img/deckfailcat.png';
 
 export default class DashboardPage extends Component {
+
+  renderText() {
+    if (!this.props.autocommits) {
+      return (
+        <p>
+          To ensure GitHub that it is your contributions, we will now generete a unique SSH key which you will need to <a href="https://github.com/settings/ssh/new" target="blank">add to your GitHub account</a>.
+          We will provide you with your next steps.
+        </p>
+      );
+    } else {
+
+    }
+  }
+
+  renderStatusBlock() {
+    return (
+      <div className="text-center w-100 mb-2">
+        <img className="mb-1" src={this.props.autocommits ? connected : disconnected} alt="" width="130" height="130" />
+        <h1 className="h3 mb-3 font-weight-normal">{this.props.autocommits ? 'Auto commits enabled!' : 'You are disabled 😞'}</h1>
+        
+        {this.renderText()}
+        
+        <button className="btn btn-primary" type="button" disabled >
+          <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+          Generating key...
+        </button>
+      </div>
+    );
+  }
+
   render() {
-    console.log(this.props.user);
     return (
       <div>
         <header>
@@ -24,13 +55,13 @@ export default class DashboardPage extends Component {
             <div className="d-flex align-items-center p-3 my-3 text-white bg-grey rounded shadow">
               <img className="mr-3" src={logo} alt="" width="48" height="48" />
               <div className="lh-100 w100">
-                <h6 className="mb-0 lh-100 position-relative">GitHub autocommit <span className="badge badge-success right-badge">O</span> </h6> 
+                <h6 className="mb-0 lh-100 d-flex justify-content-between w-100"><span>GitHub autocommit</span><i className="fas fa-magic"></i> </h6> 
                 <small>This service is used to automatically make contributions on GitHub and keep up your activity.</small>
               </div>
             </div>
 
             <div className="my-3 p-3 bg-white rounded shadow">
-              <h6 className="border-bottom border-gray pb-2 mb-0"><i className="fab fa-github mr-2"></i>Connected account</h6>
+              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fab fa-github mr-1"></i> Connected account</span><i className="fas fa-user"></i></h6>
               <div className="media text-muted pt-3">
                 <img src={this.props.user.photoURL} width="32" height="32" className="bd-placeholder-img mr-2 rounded" alt="" />
                 <p className="media-body pb-0 mb-0 small lh-125">
@@ -43,25 +74,24 @@ export default class DashboardPage extends Component {
               </div>
             </div>
 
-            <div className="row mt-2">
-              <div className="col">
-                <div className="card text-center shadow-sm">
-                  <div className="card-header">
-                    <span className="badge badge-success status-badge">Enabled</span> Auto commit status
-                  </div>
-                  <div className="card-body">
-                    <h5 className="card-title">Special title treatment</h5>
-                    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <button href="#" className="btn btn-outline-danger">Go somewhere</button>
-                  </div>
-                </div>
+            <div className="my-3 p-3 bg-white rounded shadow">
+              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fas fa-cubes mr-1"></i> Auto commit status</span><span className={`badge badge-${this.props.autocommits ? 'success' : 'danger'}`}>{this.props.autocommits ? 'Enabled' : 'Disabled'}</span></h6>
+              <div className="media text-muted pt-3">
+                {this.renderStatusBlock()}
               </div>
+            </div>
+
+            <div className="my-3 p-3 bg-white rounded shadow">
+              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fas fa-server mr-1"></i> Countdown to next commit</span></h6>
+                <div className="progress mt-3">
+                  <div className="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
           </main>
 
-          <footer class="footer mt-auto py-3">
-            <div class="container text-center">
-              <span class="text-muted">Place sticky footer content here.</span>
+          <footer className="footer mt-auto py-3 shadow-lg">
+            <div className="container text-center">
+              <span className="text-muted"><a href="https://github.com/kirillovmr" target="blank">@kirillovmr</a> | <span className="text-link" onClick={() => this.props.changePage('docs')}>Docs</span></span>
             </div>
           </footer>
         </div>

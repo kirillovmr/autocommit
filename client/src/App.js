@@ -5,6 +5,7 @@ import './App.css';
 import LandingPage from './Pages/LandingPage';
 import DashboardPage from './Pages/DashboardPage';
 import LoadingPage from './Pages/LoadingPage';
+import DocsPage from './Pages/DocsPage';
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +17,14 @@ class App extends Component {
           initialFetchDone: true,
           userProfile: user
         });
+
+        // Todo
+        // Try to find thst user in 'commits' table
+        /**
+         * this.setState({
+         *   autocommits: true || false
+         * });
+         */
       }
     });
 
@@ -23,20 +32,22 @@ class App extends Component {
       initialFetchDone: false,
       timerDone: false,
       userProfile: null,
-      unusedKey: null
+      autocommits: false,
+      unusedKey: null,
+      page: null
     };
   }
 
   componentDidMount() {
-    this.db.getUnusedKey().then(key => {
-      const id = Object.keys(key)[0];
-      const ssh = key[id];
-      console.log(id, ssh);
+    // this.db.getUnusedKey().then(key => {
+    //   const id = Object.keys(key)[0];
+    //   const ssh = key[id];
+    //   // console.log(id, ssh);
 
-      // this.db.removeUnusedKey(id).then(() => {
-      //   console.log('Key romoved');
-      // })
-    });
+    //   // this.db.removeUnusedKey(id).then(() => {
+    //   //   console.log('Key romoved');
+    //   // })
+    // });
 
     // Loading timer
     setTimeout(() => {
@@ -66,7 +77,28 @@ class App extends Component {
     });
   }
 
+  chandePage(page) {
+    switch(page){
+      case 'docs':
+        this.setState({page});
+        return;
+      default:
+        return;
+    }
+  }
+
+  returnPage(page) {
+    switch(page) {
+      case 'docs':
+        return <DocsPage />;
+      default:
+        return null;
+    }
+  }
+
   renderPage() {
+    if (this.state.page)
+      return this.returnPage(this.state.page);
     if (!this.state.initialFetchDone || !this.state.timerDone)
       return <LoadingPage />
     if (!this.state.userProfile)
@@ -75,6 +107,8 @@ class App extends Component {
       return <DashboardPage 
         logout={() => this.db.logout(() => this.onLogOut())}
         user={this.state.userProfile}
+        autocommits={this.state.autocommits}
+        changePage={this.chandePage.bind(this)}
       />
   }
 

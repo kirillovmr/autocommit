@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 
+import Loading from '../Components/Loading';
+
 import logo from '../img/logo-trans.png';
-import connected from '../img/steroidtocat.png';
-import disconnected from '../img/deckfailcat.png';
+import imgStage3 from '../img/steroidtocat.png';
+import imgStage2 from '../img/orderedlistocat.png';
+import imgStage1 from '../img/deckfailcat.png';
+// Todo
+// Copyright images from https://octodex.github.com/
 
 export default class DashboardPage extends Component {
   constructor(props) {
@@ -65,8 +70,7 @@ export default class DashboardPage extends Component {
     if (!this.state.autocommits) {
       return (
         <p>
-          To ensure GitHub that it is your contributions, we will now assign you a unique SSH key which you will need to <a href="https://github.com/settings/ssh/new" target="blank">add to your GitHub account</a>.
-          Press <strong>Generate key</strong> and follow further instructions.
+          
         </p>
       );
     } else {
@@ -75,20 +79,71 @@ export default class DashboardPage extends Component {
   }
 
   renderStatusBlock() {
-    return (
-      <div className="text-center w-100 mb-2">
-        <img className="mb-1" src={this.state.autocommits ? connected : disconnected} alt="" width="130" height="130" />
-        <h1 className="h3 mb-3 font-weight-normal">{this.state.autocommits ? 'Auto commits enabled!' : 'You are disabled 😞'}</h1>
-        
-        {this.renderText()}
-        
+    const imgSrc=()=>{
+      if (this.state.autocommits)
+        return imgStage3;
+      if (this.state.dbUser.keyName)
+        return imgStage2;
+      return imgStage1;
+    }
+    const title=()=>{
+      if (this.state.autocommits)
+        return 'You are enabled 😎';
+      if (this.state.dbUser.keyName)
+        return 'Auto commits disabled 😞';
+      return 'Generate your key';
+    }
+    const text=()=>{
+      if (this.state.autocommits)
+        return (
+          <p>Your automatic commits are successfully scheduled and will automatically run each day <code>n</code> times
+          You can disable them any time with button below</p>
+        );
+      if (this.state.dbUser.keyName)
+        return (
+          <p>You account is currently disabled from Autocommit system. <br/>
+          To schedule on your autocommits press <strong>Enable Autocommits</strong> button below. <br/>
+          You will be able to disable autocommit system any time.</p>
+        );
+      return (
+        <p>To ensure GitHub that it is your contributions, we will now assign you a unique SSH key which you will need to <a href="https://github.com/settings/ssh/new" target="blank">add to your GitHub account</a>.
+        Press <strong>Generate Key</strong> and follow further instructions.</p>
+      );
+    }
+    const btn=()=>{
+      if (this.state.autocommits)
+        return (
+          <button className="btn btn-danger" type="button">
+            Disable Autocommits
+          </button>
+        );
+      if (this.state.dbUser.keyName)
+        return (
+          <button className="btn btn-success" type="button"
+          >
+            Enable Autocommits
+          </button>
+        );
+      return (
         <button className="btn btn-primary" type="button" 
           disabled={this.state.generatingKey ? true : false}
           onClick={() => this.generateKey()}
         >
           {this.state.generatingKey ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> : null}
-          {this.state.generatingKey ? 'Generating key...' : 'Generate key'}
+          {this.state.generatingKey ? 'Generating key...' : 'Generate Key'}
         </button>
+      );
+    }
+
+    if (!this.state.dbUser)
+      return <Loading />
+
+    return (
+      <div className="text-center w-100 mb-2">
+        <img className="mb-1" src={imgSrc()} alt="" width="130" height="130" />
+        <h1 className="h3 mb-3 font-weight-normal">{title()}</h1>
+        {text()}
+        {btn()}
       </div>
     );
   }
@@ -134,7 +189,10 @@ export default class DashboardPage extends Component {
             </div>
 
             <div className="my-3 p-3 bg-white rounded shadow">
-              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fas fa-cubes mr-1"></i> Auto commit status</span><span className={`badge badge-${this.state.autocommits ? 'success' : 'danger'}`}>{this.state.autocommits ? 'Enabled' : 'Disabled'}</span></h6>
+              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100">
+                <span><i className="fas fa-cubes mr-1"></i> Auto commit status</span>
+                <span className={`badge badge-${this.state.autocommits ? 'success' : 'danger'}`}>{this.state.autocommits ? 'Enabled' : 'Disabled'}</span>
+              </h6>
               <div className="media text-muted pt-3">
                 {this.renderStatusBlock()}
               </div>

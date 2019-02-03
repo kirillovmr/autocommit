@@ -17,14 +17,10 @@ class App extends Component {
           initialFetchDone: true,
           userProfile: user
         });
-
-        // Todo
-        // Try to find thst user in 'commits' table
-        /**
-         * this.setState({
-         *   autocommits: true || false
-         * });
-         */
+      } else {
+        this.setState({
+          initialFetchDone: true
+        })
       }
     });
 
@@ -32,23 +28,11 @@ class App extends Component {
       initialFetchDone: false,
       timerDone: false,
       userProfile: null,
-      autocommits: false,
-      unusedKey: null,
       page: null
     };
   }
 
   componentDidMount() {
-    // this.db.getUnusedKey().then(key => {
-    //   const id = Object.keys(key)[0];
-    //   const ssh = key[id];
-    //   // console.log(id, ssh);
-
-    //   // this.db.removeUnusedKey(id).then(() => {
-    //   //   console.log('Key romoved');
-    //   // })
-    // });
-
     // Loading timer
     setTimeout(() => {
       this.setState({
@@ -57,18 +41,22 @@ class App extends Component {
     }, 600)
   }
 
-  onLoginSuccess(result) {
+  onSignInSuccess(result) {
     const username = result.additionalUserInfo.username;
-    const userData = {
-      email: result.user.email,
-      accessToken: result.credential.accessToken,
-      photoUrl: result.user.photoURL
-    };
-    this.db.addUserToDB(username, userData);
 
-    this.setState({
-      userProfile: result.user
-    });
+    // Adding GitHub username to Firebase user object
+    this.db.changeUserDisplayName(username).then(user => {
+      const userData = {
+        email: user.email,
+        accessToken: result.credential.accessToken,
+        photoUrl: user.photoURL
+      };
+      this.db.addUserToDB(username, userData);
+  
+      this.setState({
+        userProfile: user
+      });
+    })
   }
 
   onLogOut() {
@@ -99,16 +87,17 @@ class App extends Component {
   renderPage() {
     if (this.state.page)
       return this.returnPage(this.state.page);
-    if (!this.state.initialFetchDone || !this.state.timerDone)
+    // if (!this.state.initialFetchDone || !this.state.timerDone)
+    if (!this.state.timerDone)
       return <LoadingPage />
     if (!this.state.userProfile)
-      return <LandingPage login = {() => this.db.login((result) => this.onLoginSuccess(result))} />
+      return <LandingPage login = {() => this.db.login((result) => this.onSignInSuccess(result))} />
     else
       return <DashboardPage 
         logout={() => this.db.logout(() => this.onLogOut())}
         user={this.state.userProfile}
-        autocommits={this.state.autocommits}
         changePage={this.chandePage.bind(this)}
+        db={this.db}
       />
   }
 

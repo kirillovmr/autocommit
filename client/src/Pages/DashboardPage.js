@@ -5,13 +5,68 @@ import connected from '../img/steroidtocat.png';
 import disconnected from '../img/deckfailcat.png';
 
 export default class DashboardPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      autocommits: false,
+      dbUser: null,
+      generatingKey: false
+    }
+  }
+
+  componentDidMount() {
+    // Todo
+    // Try to find thst user in 'commits' table
+    /**
+     * this.setState({
+     *   autocommits: true || false
+     * });
+     */
+    const username = this.props.user.displayName;
+
+    this.props.db.getUserFromDB(username)
+    .then((dbUser) => {
+      this.setState({
+        dbUser
+      });
+    })
+  }
+
+  generateKey() {
+    this.setState({
+      generatingKey: true
+    });
+
+    // Taking unused key from database
+    this.props.db.getUnusedKey().then(key => {
+      const keyName = Object.keys(key)[0];
+      const keyValue = key[keyName];
+      console.log(keyName, keyValue);
+
+      const username = this.props.user.displayName;
+
+      // Assigning key to user
+      this.props.db.assignKeyToUser(username, keyName, keyValue)
+      .then(() => {
+
+        // Removing key from 'unused' table
+        this.props.db.removeUnusedKey(keyName).then(() => {
+          
+          this.setState({
+            generatingKey: false
+          });
+        });
+      });
+    });
+  }
 
   renderText() {
-    if (!this.props.autocommits) {
+    if (!this.state.autocommits) {
       return (
         <p>
-          To ensure GitHub that it is your contributions, we will now generete a unique SSH key which you will need to <a href="https://github.com/settings/ssh/new" target="blank">add to your GitHub account</a>.
-          We will provide you with your next steps.
+          To ensure GitHub that it is your contributions, we will now assign you a unique SSH key which you will need to <a href="https://github.com/settings/ssh/new" target="blank">add to your GitHub account</a>.
+          Press <strong>Generate key</strong> and follow further instructions.
         </p>
       );
     } else {
@@ -22,20 +77,24 @@ export default class DashboardPage extends Component {
   renderStatusBlock() {
     return (
       <div className="text-center w-100 mb-2">
-        <img className="mb-1" src={this.props.autocommits ? connected : disconnected} alt="" width="130" height="130" />
-        <h1 className="h3 mb-3 font-weight-normal">{this.props.autocommits ? 'Auto commits enabled!' : 'You are disabled 😞'}</h1>
+        <img className="mb-1" src={this.state.autocommits ? connected : disconnected} alt="" width="130" height="130" />
+        <h1 className="h3 mb-3 font-weight-normal">{this.state.autocommits ? 'Auto commits enabled!' : 'You are disabled 😞'}</h1>
         
         {this.renderText()}
         
-        <button className="btn btn-primary" type="button" disabled >
-          <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-          Generating key...
+        <button className="btn btn-primary" type="button" 
+          disabled={this.state.generatingKey ? true : false}
+          onClick={() => this.generateKey()}
+        >
+          {this.state.generatingKey ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> : null}
+          {this.state.generatingKey ? 'Generating key...' : 'Generate key'}
         </button>
       </div>
     );
   }
 
   render() {
+    console.log('fef', this.state);
     return (
       <div>
         <header>
@@ -75,7 +134,7 @@ export default class DashboardPage extends Component {
             </div>
 
             <div className="my-3 p-3 bg-white rounded shadow">
-              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fas fa-cubes mr-1"></i> Auto commit status</span><span className={`badge badge-${this.props.autocommits ? 'success' : 'danger'}`}>{this.props.autocommits ? 'Enabled' : 'Disabled'}</span></h6>
+              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fas fa-cubes mr-1"></i> Auto commit status</span><span className={`badge badge-${this.state.autocommits ? 'success' : 'danger'}`}>{this.state.autocommits ? 'Enabled' : 'Disabled'}</span></h6>
               <div className="media text-muted pt-3">
                 {this.renderStatusBlock()}
               </div>

@@ -46,6 +46,21 @@ export default class DB {
     })
   }
 
+  changeUserDisplayName(newName) {
+    const user = this.firebase.auth().currentUser;
+
+    return new Promise((resolve, reject) => {
+      user.updateProfile({
+        displayName: newName
+      }).then(function() {
+        console.log('Display name successfully changed');
+        resolve(user);
+      }, function(e) {
+        console.log('Error changing display name', e);
+      });
+    })
+  }
+
   addUserToDB(username, userData, success=()=>{}, error=()=>{}) {
     const ref = this.firebase.database().ref('users');
     ref.update({
@@ -58,6 +73,36 @@ export default class DB {
     .catch(e => {
       console.log(`DB error adding ${username} to database`);
       error(e);
+    });
+  }
+
+  getUserFromDB(username) {
+    const ref = this.firebase.database().ref(`users/${username}`);
+
+    return new Promise((resolve, reject) => {
+      ref.once("value", function(data) {
+        console.log(`Found ${username}`);
+        resolve(data.val());
+      });
+    });
+  }
+
+  assignKeyToUser(username, keyName, keyValue) {
+    const ref = this.firebase.database().ref(`users/${username}`);
+
+    return new Promise((resolve, reject) => {
+      ref.update({
+        keyName,
+        keyValue
+      })
+      .then((res) => {
+        console.log(`Key for ${username} was successfully assigned`, res);
+        resolve();
+      })
+      .catch(e => {
+        console.log(`Error assigning key for ${username}`);
+        reject(e);
+      });
     });
   }
 
@@ -76,6 +121,7 @@ export default class DB {
     var ref = this.firebase.database().ref("keys");
     return new Promise((resolve, reject) => {
       ref.child(keyRef).remove(() => {
+        console.log('Key was successfully removed');
         resolve('Removed');
       })
     })

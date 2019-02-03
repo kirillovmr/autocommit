@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 import Loading from '../Components/Loading';
 
@@ -14,24 +15,23 @@ export default class DashboardPage extends Component {
     super(props);
 
     this.state = {
-      autocommits: false,
-      dbUser: null,
-      generatingKey: false
+      // autocommits: false,
+      dbUser: {
+        autocommits: false
+      },
+      buttonSpinner: false,
+      modal: false
     }
   }
 
   componentDidMount() {
-    // Todo
-    // Try to find thst user in 'commits' table
-    /**
-     * this.setState({
-     *   autocommits: true || false
-     * });
-     */
+    console.log('👍 Did Mount run');
     const username = this.props.user.displayName;
 
     this.props.db.getUserFromDB(username)
     .then((dbUser) => {
+      console.log('📡 dbUser got', dbUser);
+      if (!dbUser) return this.componentDidMount();
       this.setState({
         dbUser
       });
@@ -40,7 +40,7 @@ export default class DashboardPage extends Component {
 
   generateKey() {
     this.setState({
-      generatingKey: true
+      buttonSpinner: true
     });
 
     // Taking unused key from database
@@ -53,48 +53,81 @@ export default class DashboardPage extends Component {
 
       // Assigning key to user
       this.props.db.assignKeyToUser(username, keyName, keyValue)
-      .then(() => {
+      .then((dbUser) => {
 
         // Removing key from 'unused' table
         this.props.db.removeUnusedKey(keyName).then(() => {
           
           this.setState({
-            generatingKey: false
+            dbUser,
+            buttonSpinner: false
           });
         });
       });
     });
   }
 
-  renderText() {
-    if (!this.state.autocommits) {
-      return (
-        <p>
-          
-        </p>
-      );
-    } else {
+  toggleCommits(toggle) {
+    const username = this.props.user.displayName;
 
-    }
+    this.props.db.toggleCommits(username, toggle)
+    .then(() => {
+      this.setState({
+        dbUser: {
+          ...this.state.dbUser,
+          autocommits: toggle
+        }
+      });
+    });
+  }
+
+  toggleModal() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  renderModal() {
+    return (
+      <Modal isOpen={this.state.modal} toggle={this.toggleModal.bind(this)} className={this.props.className}>
+        <ModalHeader toggle={this.toggleModal.bind(this)}>Your public SSH key</ModalHeader>
+        <ModalBody>
+          <p>
+            This is your unique public SSH key. It is used to identify our server as you when it will make auto commits. <br/><br/>
+            <a href="https://github.com/settings/ssh/new" target="blank">Connect this key to your GitHub account</a> and then you can enable Autocommits.
+          </p>
+          <div className="p-4 bg-grey text-white">
+            <code>
+              <small>
+                {this.state.dbUser.keyValue}
+                <button type="button" class="btn btn-outline-secondary btn-sm btn-block mt-2">Copy to clipboard</button>
+              </small>
+            </code>
+          </div>
+          <p className="mt-2 mb-0 text-center"><small>Make sure to enable autocommits only after you connected SSH key!</small></p>
+          <button type="button" onClick={() => {this.toggleCommits(true); this.toggleModal()}} class="btn btn-success btn-sm btn-block mt-1">Enable Autocommits</button>
+        </ModalBody>
+      </Modal>
+    );
   }
 
   renderStatusBlock() {
     const imgSrc=()=>{
-      if (this.state.autocommits)
+      if (this.state.dbUser.autocommits)
         return imgStage3;
       if (this.state.dbUser.keyName)
         return imgStage2;
       return imgStage1;
     }
     const title=()=>{
-      if (this.state.autocommits)
+      if (this.state.dbUser.autocommits)
         return 'You are enabled 😎';
       if (this.state.dbUser.keyName)
         return 'Auto commits disabled 😞';
       return 'Generate your key';
     }
     const text=()=>{
-      if (this.state.autocommits)
+      if (this.state.dbUser.autocommits)
         return (
           <p>Your automatic commits are successfully scheduled and will automatically run each day <code>n</code> times
           You can disable them any time with button below</p>
@@ -103,7 +136,7 @@ export default class DashboardPage extends Component {
         return (
           <p>You account is currently disabled from Autocommit system. <br/>
           To schedule on your autocommits press <strong>Enable Autocommits</strong> button below. <br/>
-          You will be able to disable autocommit system any time.</p>
+          Make sure that you added given SSH-key to <a href="https://github.com/settings/ssh/new" target="blank">your GitHUb Account</a></p>
         );
       return (
         <p>To ensure GitHub that it is your contributions, we will now assign you a unique SSH key which you will need to <a href="https://github.com/settings/ssh/new" target="blank">add to your GitHub account</a>.
@@ -111,31 +144,38 @@ export default class DashboardPage extends Component {
       );
     }
     const btn=()=>{
-      if (this.state.autocommits)
+      if (this.state.dbUser.autocommits)
         return (
-          <button className="btn btn-danger" type="button">
-            Disable Autocommits
-          </button>
+          <span>
+            <button className="btn btn-danger" type="button"
+              onClick={() => this.toggleCommits(false)}
+            >
+              Disable Autocommits
+            </button>
+          </span>
         );
       if (this.state.dbUser.keyName)
         return (
-          <button className="btn btn-success" type="button"
-          >
-            Enable Autocommits
-          </button>
+          <span>
+            <button className="btn btn-success" type="button"
+            onClick={this.toggleModal.bind(this)}
+            >
+              Enable Autocommits
+            </button>
+          </span>
         );
       return (
         <button className="btn btn-primary" type="button" 
-          disabled={this.state.generatingKey ? true : false}
+          disabled={this.state.buttonSpinner ? true : false}
           onClick={() => this.generateKey()}
         >
-          {this.state.generatingKey ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> : null}
-          {this.state.generatingKey ? 'Generating key...' : 'Generate Key'}
+          {this.state.buttonSpinner ? <span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> : null}
+          {this.state.buttonSpinner ? 'Generating key...' : 'Generate Key'}
         </button>
       );
     }
 
-    if (!this.state.dbUser)
+    if (!this.state.dbUser.email)
       return <Loading />
 
     return (
@@ -151,7 +191,8 @@ export default class DashboardPage extends Component {
   render() {
     console.log('fef', this.state);
     return (
-      <div>
+      <div className="modal-open">
+        {this.renderModal()}
         <header>
           <nav className="navbar navbar-dark bg-dark">
             <div className="container d-flex justify-content-between">
@@ -191,7 +232,7 @@ export default class DashboardPage extends Component {
             <div className="my-3 p-3 bg-white rounded shadow">
               <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100">
                 <span><i className="fas fa-cubes mr-1"></i> Auto commit status</span>
-                <span className={`badge badge-${this.state.autocommits ? 'success' : 'danger'}`}>{this.state.autocommits ? 'Enabled' : 'Disabled'}</span>
+                <span className={`badge badge-${this.state.dbUser.autocommits ? 'success' : 'danger'}`}>{this.state.dbUser.autocommits ? 'Enabled' : 'Disabled'}</span>
               </h6>
               <div className="media text-muted pt-3">
                 {this.renderStatusBlock()}

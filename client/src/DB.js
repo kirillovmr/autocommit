@@ -41,11 +41,12 @@ export default class DB {
       success();
     })
     .catch(e => {
-      console.log('Sign out error', e);
+      console.error('Sign out error', e);
       error();
     })
   }
 
+  // Changes standart Display name to GitHub username
   changeUserDisplayName(newName) {
     const user = this.firebase.auth().currentUser;
 
@@ -56,26 +57,31 @@ export default class DB {
         console.log('Display name successfully changed');
         resolve(user);
       }, function(e) {
-        console.log('Error changing display name', e);
+        console.error('Error changing display name', e);
       });
     })
   }
 
+  // Adds user to DB/users
   addUserToDB(username, userData, success=()=>{}, error=()=>{}) {
     const ref = this.firebase.database().ref('users');
     ref.update({
-      [username]: userData
+      [username]: {
+        ...userData,
+        autocommits: false
+      }
     })
     .then(() => {
       console.log(`DB ${username} successfully added to database`);
       success();
     })
     .catch(e => {
-      console.log(`DB error adding ${username} to database`);
+      console.error(`DB error adding ${username} to database`);
       error(e);
     });
   }
 
+  // Returns user from DB/users
   getUserFromDB(username) {
     const ref = this.firebase.database().ref(`users/${username}`);
 
@@ -87,6 +93,7 @@ export default class DB {
     });
   }
 
+  // Assigns ssh-key to user
   assignKeyToUser(username, keyName, keyValue) {
     const ref = this.firebase.database().ref(`users/${username}`);
 
@@ -95,12 +102,34 @@ export default class DB {
         keyName,
         keyValue
       })
-      .then((res) => {
-        console.log(`Key for ${username} was successfully assigned`, res);
+      .then(() => {
+        console.log(`Key for ${username} was successfully assigned`);
+
+        this.getUserFromDB(username)
+        .then(dbUser => {
+          resolve(dbUser);
+        });
+      })
+      .catch(e => {
+        console.error(`Error assigning key for ${username}`);
+        reject(e);
+      });
+    });
+  }
+
+  toggleCommits(username, toggle) {
+    const ref = this.firebase.database().ref(`users/${username}`);
+
+    return new Promise((resolve, reject) => {
+      ref.update({
+        autocommits: toggle
+      })
+      .then(() => {
+        console.log(`Autocommits for ${username} was set to ${toggle}`);
         resolve();
       })
       .catch(e => {
-        console.log(`Error assigning key for ${username}`);
+        console.error(`Error setting ${username} autocommits to ${toggle}`);
         reject(e);
       });
     });

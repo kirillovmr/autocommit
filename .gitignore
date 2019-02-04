@@ -1,5 +1,6 @@
 users/
 node_modules/
+build/
 servicekey.json
 .env
 .DS_Store

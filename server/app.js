@@ -53,7 +53,8 @@ app.post('/commit', (req, res) => {
     console.log('Received array of users to commit');
 
     users.forEach(user => {
-      runCommit(user.username, user.email, user.keyName);
+      console.log(user);
+      runCommit(user.username, user.email, user.keyName, user.token);
     })
 
     res.send({

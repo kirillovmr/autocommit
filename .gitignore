@@ -5,3 +5,4 @@ servicekey.json
 .env
 .DS_Store
 firebaseConfig.js
+server/.DS_Store

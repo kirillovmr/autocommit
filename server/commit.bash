@@ -12,13 +12,20 @@
 GITHUB_USERNAME="$1"
 GITHUB_EMAIL="$2"
 KEY_NAME="$3"
+GITHUB_TOKEN="$4"
 REPO_NAME="autocommit" # Repo which will be used for auto commits
-COMMITS_PER_DAY=4 # number of auto commits per day
+COMMITS_PER_DAY=1 # number of auto commits per day
 
 _date=`date +%Y-%m-%d`
 _time=`date +%H:%M:%S`
 _filename="auto.md"
 _users_folder="users"
+
+# Deleting user folder
+rm -rf "${_users_folder}/${GITHUB_USERNAME}"
+
+# Wait to ensure that folder deleted
+sleep 4
 
 # Creating user folder if it does not exists
 mkdir -p "${_users_folder}/${GITHUB_USERNAME}"
@@ -27,8 +34,17 @@ cd "${_users_folder}/${GITHUB_USERNAME}"
 #
 # Clonning and setting up repo
 # # #
-git clone git@${KEY_NAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git
+
+if ! git clone git@${KEY_NAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git
+then
+  # Repo was not found on GitHub, creating
+  echo 'Creating repo'
+  curl -X POST https://api.github.com/user/repos -u ${GITHUB_USERNAME}:$GITHUB_TOKEN -d '{"name":"'${REPO_NAME}'"}'
+  git clone git@${KEY_NAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git  
+fi
+
 cd ${REPO_NAME}
+
 git config --local user.name ${GITHUB_USERNAME}
 git config --local user.email ${GITHUB_EMAIL}
 
@@ -41,7 +57,8 @@ do
   echo -e "Auto Commit ${_time} \n" >> ${_filename}
   git add .
   git commit -m "Auto Commit ${_date} ${_time}"
-  git remote add origin git@github.com:${GITHUB_USERNAME}/${REPO_NAME}.git
+  git remote add origin git@${KEY_NAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git
+  git remote -v
   git push -u origin master
   sleep 20
 done

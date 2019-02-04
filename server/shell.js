@@ -1,9 +1,9 @@
 const { exec } = require('child_process');
 const uuidv1 = require('uuid/v1');
 
-function runCommit(username, email) {
+function runCommit(username, email, keyName) {
   console.log(`Running commit for ${username}`);
-  const script = exec(`bash commit.bash ${username} ${email}`);
+  const script = exec(`bash commit.bash ${username} ${email} ${keyName}`);
 
   script.stdout.on('data', (data) => {
     console.log('sh:', data)

@@ -44,24 +44,21 @@ db.numUnusedKeys().then(unusedKeys => {
   }
 });
 
-db.getUsersToCommit().then(users => {
-  console.log(users);
-})
-
-
 /**
  * GET & POST Methods
  */
-
-// app.get('/', (req, res) => {
-//   res.sendFile('index.html');
-// });
-
 app.post('/commit', (req, res) => {
-  console.log('Hey');
-  db.getUsersToCommit();
-  res.send({
-    success: true
+  console.log('Autocommit started');
+  db.getUsersToCommit().then(users => {
+    console.log('Received array of users to commit');
+
+    users.forEach(user => {
+      runCommit(user.username, user.email, user.keyName);
+    })
+
+    res.send({
+      success: true
+    });
   });
 });
 

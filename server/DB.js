@@ -11,9 +11,6 @@ class DB {
     this.db = admin.database();
   }
 
-  /**
-   * Methods to work with keys
-   */
   // Returns number of unused keys
   async numUnusedKeys() {
     const data = await this.db.ref("keys").once("value");
@@ -34,6 +31,7 @@ class DB {
     });
   }
 
+  // Returns array of user objects with enabled autocommit
   getUsersToCommit() {
     const ref = this.db.ref("users");
 

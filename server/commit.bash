@@ -11,6 +11,7 @@
 # # #
 GITHUB_USERNAME="$1"
 GITHUB_EMAIL="$2"
+KEY_NAME="$3"
 REPO_NAME="autocommit" # Repo which will be used for auto commits
 COMMITS_PER_DAY=4 # number of auto commits per day
 
@@ -26,7 +27,7 @@ cd "${_users_folder}/${GITHUB_USERNAME}"
 #
 # Clonning and setting up repo
 # # #
-git clone git@${GITHUB_USERNAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git
+git clone git@${KEY_NAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git
 cd ${REPO_NAME}
 git config --local user.name ${GITHUB_USERNAME}
 git config --local user.email ${GITHUB_EMAIL}

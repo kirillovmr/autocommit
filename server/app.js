@@ -44,17 +44,22 @@ db.numUnusedKeys().then(unusedKeys => {
   }
 });
 
+db.getUsersToCommit().then(users => {
+  console.log(users);
+})
+
 
 /**
  * GET & POST Methods
  */
 
-app.get('/', (req, res) => {
-  res.sendFile('index.html');
-});
+// app.get('/', (req, res) => {
+//   res.sendFile('index.html');
+// });
 
-app.post('/test', (req, res) => {
-  runCommit('kirillovmr', 'mr.kirillov@icloud.com');
+app.post('/commit', (req, res) => {
+  console.log('Hey');
+  db.getUsersToCommit();
   res.send({
     success: true
   });

@@ -24,13 +24,33 @@ class DB {
   // Adds new username - sshkey, returns key reference
   addUnusedKey(username, key) {
     if (!username || !key) return false;
-    var ref = this.db.ref("keys");
+    const ref = this.db.ref("keys");
 
     return new Promise((resolve, reject) => {
       const newRef = ref.update({
         [username]: key
       });
       resolve(newRef.key);
+    });
+  }
+
+  getUsersToCommit() {
+    const ref = this.db.ref("users");
+
+    return new Promise((resolve, reject) => {
+      ref.on("value", (snapshot) => {
+        const data = snapshot.val();
+        const users = [];
+        Object.keys(data).map(username => {
+          if (data[username].autocommits && data[username].keyName) 
+            users.push({
+              username,
+              email: data[username].email,
+              keyName: data[username].keyName
+            });
+        });
+        resolve(users);
+      })
     });
   }
 }

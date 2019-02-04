@@ -91,7 +91,10 @@ class App extends Component {
     if (!this.state.timerDone)
       return <LoadingPage />
     if (!this.state.userProfile)
-      return <LandingPage login = {() => this.db.login((result) => this.onSignInSuccess(result))} />
+      return <LandingPage 
+        login = {() => this.db.login((result) => this.onSignInSuccess(result))} 
+        changePage={this.chandePage.bind(this)}
+      />
     else
       return <DashboardPage 
         logout={() => this.db.logout(() => this.onLogOut())}

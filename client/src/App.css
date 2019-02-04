@@ -31,3 +31,9 @@
   cursor: pointer;
   text-decoration: underline;
 }
+a {
+  color: forestgreen !important;
+}
+.text-light a {
+  color: limegreen !important;
+}

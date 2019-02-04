@@ -29,6 +29,15 @@ const faq = [
 
 export default class LandingPage extends Component {
 
+  componentDidMount() {
+    const phPage = "http://kirillovmr.com";
+    const s = document.createElement('script');
+    s.type = "text/javascript";
+    s.async = true;
+    s.innerHTML = `!function(t){var e,o=t.url,n=document.getElementsByTagName("body")[0],a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=o,e=function(){ONPHstart(t)},a.readyState?a.onreadystatechange=function(){"loaded"!=a.readyState&&"complete"!=a.readyState||(a.onreadystatechange=null,e())}:a.onload=function(){e()},n.appendChild(a)}({on_title:"Support us on ProductHunt!",on_description:"Hey! We\'re just released on PH, so join the discussion on our page.",link:"${phPage}",button_text:"Visit Page",position:"bottom-left",design:"kitty",display_from: false,from_title:"Hello Hunter!",from_description:"You have a special discount: 20% off. Just use the code below at checkout.",from_discount:"HUNTER20",url:"https://hypeok.com/onph/onph.js"});`
+    this.refs.main.appendChild(s);
+  }
+
   renderSteps() {
     return steps.map(step => {
       return (
@@ -72,7 +81,7 @@ export default class LandingPage extends Component {
         </header>
         
         <div className="d-flex flex-column justify-content-between" style={{height: 'calc(100vh - 56px)'}}>
-          <main role="main" className="container mb-5">
+          <main role="main" ref="main" className="container mb-5">
             <div className="card my-3 rounded shadow">
               <img src="https://picsum.photos/600/150/?blur" className="card-img-top" alt="..." />
               <div className="card-body text-center">

@@ -37,3 +37,6 @@ a {
 .text-light a {
   color: limegreen !important;
 }
+.onph-container a {
+  color: #fff !important;
+}

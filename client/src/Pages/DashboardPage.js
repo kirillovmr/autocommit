@@ -240,16 +240,21 @@ export default class DashboardPage extends Component {
             </div>
 
             <div className="my-3 p-3 bg-white rounded shadow">
+              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i class="fas fa-sort-amount-down"></i> Step by Step Guide</span></h6>
+
+            </div>
+
+            <div className="my-3 p-3 bg-white rounded shadow">
               <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fas fa-server mr-1"></i> Countdown to next commit</span></h6>
-                <div className="progress mt-3">
-                  <div className="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+              <div className="progress mt-3">
+                <div className="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
             </div>
           </main>
 
           <footer className="footer mt-auto py-3 shadow-lg">
             <div className="container text-center">
-              <span className="text-muted"><a href="https://github.com/kirillovmr" target="blank">@kirillovmr</a> | <span className="text-link" onClick={() => this.props.changePage('docs')}>Docs</span></span>
+              <span className="text-muted"><a href="https://github.com/kirillovmr/autocommit" target="blank"><i className="fab fa-github mr-1"></i>autocommit</a> | <span className="text-link" onClick={() => this.props.changePage('docs')}>Docs</span></span>
             </div>
           </footer>
         </div>

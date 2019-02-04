@@ -34,7 +34,7 @@ export default class LandingPage extends Component {
     const s = document.createElement('script');
     s.type = "text/javascript";
     s.async = true;
-    s.innerHTML = `!function(t){var e,o=t.url,n=document.getElementsByTagName("body")[0],a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=o,e=function(){ONPHstart(t)},a.readyState?a.onreadystatechange=function(){"loaded"!=a.readyState&&"complete"!=a.readyState||(a.onreadystatechange=null,e())}:a.onload=function(){e()},n.appendChild(a)}({on_title:"Support us on ProductHunt!",on_description:"Hey! We\'re just released on PH, so join the discussion on our page.",link:"${phPage}",button_text:"Visit Page",position:"bottom-left",design:"kitty",display_from: false,from_title:"Hello Hunter!",from_description:"You have a special discount: 20% off. Just use the code below at checkout.",from_discount:"HUNTER20",url:"https://hypeok.com/onph/onph.js"});`
+    s.innerHTML = `!function(t){var e,o=t.url,n=document.getElementsByTagName("body")[0],a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=o,e=function(){ONPHstart(t)},a.readyState?a.onreadystatechange=function(){"loaded"!=a.readyState&&"complete"!=a.readyState||(a.onreadystatechange=null,e())}:a.onload=function(){e()},n.appendChild(a)}({on_title:"Support us on ProductHunt!",on_description:"Hey! We're just released on PH, so join the discussion on our page.",link:"${phPage}",button_text:"Visit Page",position:"bottom-left",design:"kitty",display_from: false,from_title:"Hello Hunter!",from_description:"You have a special discount: 20% off. Just use the code below at checkout.",from_discount:"HUNTER20",url:"https://hypeok.com/onph/onph.js"});`
     this.refs.main.appendChild(s);
   }
 
@@ -128,7 +128,7 @@ export default class LandingPage extends Component {
 
           <footer className="footer bg-dark mt-auto py-3 shadow-lg">
             <div className="container text-center">
-              <span className="text-light"><a href="https://github.com/kirillovmr" target="blank">@kirillovmr</a> | <span className="text-link" onClick={() => this.props.changePage('docs')}>Docs</span></span>
+              <span className="text-light"><a href="https://github.com/kirillovmr/autocommit" target="blank"><i className="fab fa-github mr-1"></i>autocommit</a></span>
             </div>
           </footer>
         </div>

@@ -191,7 +191,7 @@ export default class DashboardPage extends Component {
   render() {
     console.log('fef', this.state);
     return (
-      <div className="modal-open">
+      <div>
         {this.renderModal()}
         <header>
           <nav className="navbar navbar-dark bg-dark">

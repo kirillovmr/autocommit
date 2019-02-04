@@ -1,3 +1,7 @@
+.card {
+  border: 0 !important;
+}
+
 .status-badge {
   position: absolute;
   margin-top: 3px;

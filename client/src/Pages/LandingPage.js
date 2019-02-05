@@ -118,7 +118,7 @@ export default class LandingPage extends Component {
             <div className="my-3 p-3 bg-dark text-light rounded shadow">
               <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100">
                 <span>
-                  <span role="img" aria-label="emoji">🙋‍♂️</span> FAQ
+                  <span role="img" aria-label="emoji">🙋‍</span> FAQ
                 </span>
                 <i className="fas fa-question"></i>
               </h6>

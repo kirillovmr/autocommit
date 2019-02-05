@@ -48,8 +48,8 @@ fi
 
 cd ${REPO_NAME}
 
-git config --local user.name ${GITHUB_USERNAME}
-git config --local user.email ${GITHUB_EMAIL}
+git config user.name ${GITHUB_USERNAME}
+git config user.email ${GITHUB_EMAIL}
 
 #
 # Making commits
@@ -60,6 +60,7 @@ do
   echo -e "Auto Commit ${_time} \n" >> ${_filename}
   git add .
   git commit -m "Auto Commit ${_date} ${_time}"
+  git remote add origin https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
   git push -u origin master
   sleep 20
 done

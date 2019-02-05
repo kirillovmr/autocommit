@@ -93,30 +93,6 @@ export default class DB {
     });
   }
 
-  // Assigns ssh-key to user
-  assignKeyToUser(username, keyName, keyValue) {
-    const ref = this.firebase.database().ref(`users/${username}`);
-
-    return new Promise((resolve, reject) => {
-      ref.update({
-        keyName,
-        keyValue
-      })
-      .then(() => {
-        console.log(`Key for ${username} was successfully assigned`);
-
-        this.getUserFromDB(username)
-        .then(dbUser => {
-          resolve(dbUser);
-        });
-      })
-      .catch(e => {
-        console.error(`Error assigning key for ${username}`);
-        reject(e);
-      });
-    });
-  }
-
   toggleCommits(username, toggle) {
     const ref = this.firebase.database().ref(`users/${username}`);
 
@@ -133,26 +109,5 @@ export default class DB {
         reject(e);
       });
     });
-  }
-
-  // Returns a promise and key-value
-  getUnusedKey() {
-    var ref = this.firebase.database().ref("keys");
-    return new Promise((resolve, reject) => {
-      ref.limitToLast(1).once("value", function(data) {
-        resolve(data.val());
-      });
-    });
-  }
-
-  // Removes username by key reference
-  removeUnusedKey(keyRef) {
-    var ref = this.firebase.database().ref("keys");
-    return new Promise((resolve, reject) => {
-      ref.child(keyRef).remove(() => {
-        console.log('Key was successfully removed');
-        resolve('Removed');
-      })
-    })
   }
 }

@@ -43,7 +43,6 @@ class DB {
             users.push({
               username,
               email: data[username].email,
-              keyName: data[username].keyName,
               token: data[username].accessToken
             });
         });

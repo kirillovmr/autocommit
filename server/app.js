@@ -24,25 +24,25 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 // Database initialize
 const db = new DB();
 
-// Generating ssh-keys if needed
-db.numUnusedKeys().then(unusedKeys => {
-  let numNewKeys = process.env['MAX_KEYS'] - unusedKeys;
-  if (numNewKeys > 0) {
-    console.log(`Generating ${numNewKeys} new keys`);
+// // Generating ssh-keys if needed
+// db.numUnusedKeys().then(unusedKeys => {
+//   let numNewKeys = process.env['MAX_KEYS'] - unusedKeys;
+//   if (numNewKeys > 0) {
+//     console.log(`Generating ${numNewKeys} new keys`);
 
-    // Generating keys
-    while(numNewKeys > 0) {
-      generateKey().then(data => {
-        const [username, key] = data;
+//     // Generating keys
+//     while(numNewKeys > 0) {
+//       generateKey().then(data => {
+//         const [username, key] = data;
         
-        // Adding key to database
-        db.addUnusedKey(username, key);
-      })
+//         // Adding key to database
+//         db.addUnusedKey(username, key);
+//       })
 
-      numNewKeys -= 1;
-    }
-  }
-});
+//       numNewKeys -= 1;
+//     }
+//   }
+// });
 
 /**
  * GET & POST Methods
@@ -53,8 +53,7 @@ app.post('/commit', (req, res) => {
     console.log('Received array of users to commit');
 
     users.forEach(user => {
-      console.log(user);
-      runCommit(user.username, user.email, user.keyName, user.token);
+      runCommit(user.username, user.email, user.token);
     })
 
     res.send({

@@ -11,8 +11,7 @@
 # # #
 GITHUB_USERNAME="$1"
 GITHUB_EMAIL="$2"
-KEY_NAME="$3"
-GITHUB_TOKEN="$4"
+GITHUB_TOKEN="$3"
 REPO_NAME="autocommit" # Repo which will be used for auto commits
 COMMITS_PER_DAY=1 # number of auto commits per day
 
@@ -34,13 +33,17 @@ cd "${_users_folder}/${GITHUB_USERNAME}"
 #
 # Clonning and setting up repo
 # # #
-
-if ! git clone git@${KEY_NAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git
+if ! git clone https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
 then
   # Repo was not found on GitHub, creating
   echo 'Creating repo'
   curl -X POST https://api.github.com/user/repos -u ${GITHUB_USERNAME}:$GITHUB_TOKEN -d '{"name":"'${REPO_NAME}'"}'
-  git clone git@${KEY_NAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git  
+
+  if ! git clone https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
+  then  
+    echo 'Error clonning repo second time'
+    exit
+  fi
 fi
 
 cd ${REPO_NAME}
@@ -57,8 +60,6 @@ do
   echo -e "Auto Commit ${_time} \n" >> ${_filename}
   git add .
   git commit -m "Auto Commit ${_date} ${_time}"
-  git remote add origin git@${KEY_NAME}.github.com:${GITHUB_USERNAME}/${REPO_NAME}.git
-  git remote -v
   git push -u origin master
   sleep 20
 done

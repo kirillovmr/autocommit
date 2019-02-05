@@ -5,7 +5,7 @@
   "main": "server/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/app.js",
+    "start": "cd server && node app.js",
     "build-front": "cd client && npm i && npm run build && cd ..",
     "deploy-heroku": "git push heroku master"
   },

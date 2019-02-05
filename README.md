@@ -9,6 +9,8 @@ This service is used to automatically make contributions on GitHub and keep up y
 
 **Website**: [AutoCommit](https://kirillovmr.github.io/autocommit)
 
+Use echo $(cat key.json) > text.txt to convert service key to JSON
+
 ## Author
 
 * **Viktor Kirillov** - [@kirillovmr](https://github.com/kirillovmr)

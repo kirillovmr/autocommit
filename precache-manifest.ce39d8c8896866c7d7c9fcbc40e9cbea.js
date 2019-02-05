@@ -1,9 +1,5 @@
 self.__precacheManifest = [
   {
-    "revision": "15414bd9348dbcc3c49a523f1a39f2d9",
-    "url": "/autocommit/static/media/steroidtocat.15414bd9.png"
-  },
-  {
     "revision": "c9b87b0e8b300a4f74b18de0e0fc1c61",
     "url": "/autocommit/static/media/orderedlistocat.c9b87b0e.png"
   },
@@ -20,19 +16,19 @@ self.__precacheManifest = [
     "url": "/autocommit/static/js/runtime~main.52328715.js"
   },
   {
-    "revision": "9264256a9ba0152ca54f",
-    "url": "/autocommit/static/js/main.9264256a.chunk.js"
+    "revision": "5b25f60c1834fb6c1657",
+    "url": "/autocommit/static/js/main.5b25f60c.chunk.js"
   },
   {
-    "revision": "75e4b454844f3bf17634",
-    "url": "/autocommit/static/js/1.75e4b454.chunk.js"
+    "revision": "f6e1d6ae1e648d18237a",
+    "url": "/autocommit/static/js/1.f6e1d6ae.chunk.js"
   },
   {
-    "revision": "9264256a9ba0152ca54f",
-    "url": "/autocommit/static/css/main.69f46e8f.chunk.css"
+    "revision": "5b25f60c1834fb6c1657",
+    "url": "/autocommit/static/css/main.2bdc9ce7.chunk.css"
   },
   {
-    "revision": "7a5e9e849601efa908c216cf693c389b",
+    "revision": "a2450fa02e4ce64d4850651d278fee18",
     "url": "/autocommit/index.html"
   }
 ];

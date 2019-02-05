@@ -1,12 +1,11 @@
 var admin = require('firebase-admin');
-var serviceAccount = require('./servicekey.json');
 require('dotenv').config();
 
 class DB {
   constructor() {
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-      databaseURL: process.env['DB_URL']
+      credential: admin.credential.cert(JSON.parse(process.env.CREDENTIALS)),
+      databaseURL: process.env.DB_URL
     });
     this.db = admin.database();
   }

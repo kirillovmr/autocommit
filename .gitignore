@@ -1,7 +1,7 @@
 users/
 node_modules/
 build/
-servicekey.json
+# servicekey.json
 .env
 .DS_Store
 firebaseConfig.js

@@ -43,20 +43,30 @@ class App extends Component {
 
   onSignInSuccess(result) {
     const username = result.additionalUserInfo.username;
+    console.log('📦 Sign in');
 
-    // Adding GitHub username to Firebase user object
-    this.db.changeUserDisplayName(username).then(user => {
-      const userData = {
-        email: user.email,
-        accessToken: result.credential.accessToken,
-        photoUrl: user.photoURL
-      };
-      this.db.addUserToDB(username, userData);
-  
-      this.setState({
-        userProfile: user
+    // Try to find user in db
+    this.db.getUserFromDB(username)
+    .then(user => {
+      
+      // Setting autocommits value from DB or false if sign in first time
+      let autocommits = !!user ? user.autocommits : false;
+
+      // Adding GitHub username to Firebase user object
+      this.db.changeUserDisplayName(username).then(user => {
+        const userData = {
+          email: user.email,
+          autocommits,
+          accessToken: result.credential.accessToken,
+          photoUrl: user.photoURL
+        };
+        this.db.addUserToDB(username, userData);
+    
+        this.setState({
+          userProfile: user
+        });
       });
-    })
+    });
   }
 
   onLogOut() {
@@ -87,7 +97,6 @@ class App extends Component {
   renderPage() {
     if (this.state.page)
       return this.returnPage(this.state.page);
-    // if (!this.state.initialFetchDone || !this.state.timerDone)
     if (!this.state.timerDone)
       return <LoadingPage />
     if (!this.state.userProfile)

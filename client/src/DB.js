@@ -65,10 +65,10 @@ export default class DB {
   // Adds user to DB/users
   addUserToDB(username, userData, success=()=>{}, error=()=>{}) {
     const ref = this.firebase.database().ref('users');
+
     ref.update({
       [username]: {
-        ...userData,
-        autocommits: false
+        ...userData
       }
     })
     .then(() => {

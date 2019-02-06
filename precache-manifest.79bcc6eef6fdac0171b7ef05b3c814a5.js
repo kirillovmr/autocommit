@@ -12,23 +12,27 @@ self.__precacheManifest = [
     "url": "/autocommit/static/media/deckfailcat.c99b2b43.png"
   },
   {
+    "revision": "06004aa42e4ebdd08238d476a7d350ca",
+    "url": "/autocommit/static/media/banner.06004aa4.png"
+  },
+  {
     "revision": "52328715926e387f55ef",
     "url": "/autocommit/static/js/runtime~main.52328715.js"
   },
   {
-    "revision": "5b25f60c1834fb6c1657",
-    "url": "/autocommit/static/js/main.5b25f60c.chunk.js"
+    "revision": "3684fbd11c0f36797ffa",
+    "url": "/autocommit/static/js/main.3684fbd1.chunk.js"
   },
   {
-    "revision": "f6e1d6ae1e648d18237a",
-    "url": "/autocommit/static/js/1.f6e1d6ae.chunk.js"
+    "revision": "0135e173596302f7a6db",
+    "url": "/autocommit/static/js/1.0135e173.chunk.js"
   },
   {
-    "revision": "5b25f60c1834fb6c1657",
-    "url": "/autocommit/static/css/main.2bdc9ce7.chunk.css"
+    "revision": "3684fbd11c0f36797ffa",
+    "url": "/autocommit/static/css/main.5111c77e.chunk.css"
   },
   {
-    "revision": "a2450fa02e4ce64d4850651d278fee18",
+    "revision": "360ee3361382f6c69a5caed4dd7d61ed",
     "url": "/autocommit/index.html"
   }
 ];

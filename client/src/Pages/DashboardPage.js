@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import Loading from '../Components/Loading';
+import HowItWorks from '../Components/HowItWorks';
+import Footer from '../Components/Footer';
 
 import logo from '../img/logo-trans.png';
 import imgStage2 from '../img/orderedlistocat.png';
@@ -57,13 +59,13 @@ export default class DashboardPage extends Component {
     }
     const title=()=>{
       if (this.state.dbUser.autocommits)
-        return 'You are enabled 😎';
+        return 'You are enabled 🥳';
       return 'Auto commits disabled 😞';
     }
     const text=()=>{
       if (this.state.dbUser.autocommits)
         return (
-          <p>Your automatic commits are successfully scheduled and will automatically run each day <code>n</code> times
+          <p>Your autocommits are successfully scheduled and will automatically run every day. <br/>
           You can disable them any time with button below</p>
         );
       return (
@@ -121,7 +123,7 @@ export default class DashboardPage extends Component {
         </header>
 
         <div className="d-flex flex-column justify-content-between" style={{height: 'calc(100vh - 56px)'}}>
-          <main role="main" className="container">
+          <main role="main" className="container mb-5">
             <div className="d-flex align-items-center p-3 my-3 text-white bg-grey rounded shadow">
               <img className="mr-3" src={logo} alt="" width="48" height="48" />
               <div className="lh-100 w100">
@@ -154,19 +156,10 @@ export default class DashboardPage extends Component {
               </div>
             </div>
 
-            <div className="my-3 p-3 bg-white rounded shadow">
-              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fas fa-server mr-1"></i> Countdown to next commit</span></h6>
-              <div className="progress mt-3">
-                <div className="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
+            <HowItWorks  />
           </main>
 
-          <footer className="footer mt-auto py-3 shadow-lg">
-            <div className="container text-center">
-              <span className="text-muted"><a href="https://github.com/kirillovmr/autocommit" target="blank"><i className="fab fa-github mr-1"></i>autocommit</a></span>
-            </div>
-          </footer>
+          <Footer dark />
         </div>
       </div>
     );

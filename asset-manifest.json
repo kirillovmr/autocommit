@@ -1,7 +1,7 @@
 {
   "main.css": "/autocommit/static/css/main.5111c77e.chunk.css",
-  "main.js": "/autocommit/static/js/main.3684fbd1.chunk.js",
-  "main.js.map": "/autocommit/static/js/main.3684fbd1.chunk.js.map",
+  "main.js": "/autocommit/static/js/main.1067e765.chunk.js",
+  "main.js.map": "/autocommit/static/js/main.1067e765.chunk.js.map",
   "static/js/1.0135e173.chunk.js": "/autocommit/static/js/1.0135e173.chunk.js",
   "static/js/1.0135e173.chunk.js.map": "/autocommit/static/js/1.0135e173.chunk.js.map",
   "runtime~main.js": "/autocommit/static/js/runtime~main.52328715.js",
@@ -12,6 +12,6 @@
   "static/media/orderedlistocat.png": "/autocommit/static/media/orderedlistocat.c9b87b0e.png",
   "static/css/main.5111c77e.chunk.css.map": "/autocommit/static/css/main.5111c77e.chunk.css.map",
   "index.html": "/autocommit/index.html",
-  "precache-manifest.79bcc6eef6fdac0171b7ef05b3c814a5.js": "/autocommit/precache-manifest.79bcc6eef6fdac0171b7ef05b3c814a5.js",
+  "precache-manifest.fc3dcaf536aafb62f1e74288fffbfb82.js": "/autocommit/precache-manifest.fc3dcaf536aafb62f1e74288fffbfb82.js",
   "service-worker.js": "/autocommit/service-worker.js"
 }

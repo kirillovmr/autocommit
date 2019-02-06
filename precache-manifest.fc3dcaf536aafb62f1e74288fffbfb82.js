@@ -20,19 +20,19 @@ self.__precacheManifest = [
     "url": "/autocommit/static/js/runtime~main.52328715.js"
   },
   {
-    "revision": "3684fbd11c0f36797ffa",
-    "url": "/autocommit/static/js/main.3684fbd1.chunk.js"
+    "revision": "1067e765dcb3388f14e1",
+    "url": "/autocommit/static/js/main.1067e765.chunk.js"
   },
   {
     "revision": "0135e173596302f7a6db",
     "url": "/autocommit/static/js/1.0135e173.chunk.js"
   },
   {
-    "revision": "3684fbd11c0f36797ffa",
+    "revision": "1067e765dcb3388f14e1",
     "url": "/autocommit/static/css/main.5111c77e.chunk.css"
   },
   {
-    "revision": "360ee3361382f6c69a5caed4dd7d61ed",
+    "revision": "4e8517f748d33adaad95a34c555f9b8b",
     "url": "/autocommit/index.html"
   }
 ];

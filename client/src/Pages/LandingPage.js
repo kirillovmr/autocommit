@@ -27,7 +27,7 @@ export default class LandingPage extends Component {
             <div className="container d-flex justify-content-between">
               <span className="navbar-brand text-light">
                 <img src={logo} width="30" height="30" className="d-inline-block align-top mr-2" alt="" />
-                Auto Commit
+                Autocommit 2
               </span>
               <button type="button" onClick={this.props.login} className="btn btn-outline-light"><i className="fab fa-github mr-1"></i> Login</button>
             </div>

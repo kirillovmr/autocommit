@@ -12,7 +12,7 @@
 GITHUB_USERNAME="$1"
 GITHUB_EMAIL="$2"
 GITHUB_TOKEN="$3"
-REPO_NAME="autocommit" # Repo which will be used for auto commits
+REPO_NAME="_autocommit" # Repo which will be used for auto commits
 COMMITS_PER_DAY=1 # number of auto commits per day
 
 _date=`date +%Y-%m-%d`

@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kirillovmr.github.io/autocommit",
+  "homepage": "https://autocommit.live",
   "dependencies": {
     "firebase": "^5.8.2",
     "react": "^16.7.0",

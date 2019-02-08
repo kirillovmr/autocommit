@@ -11,7 +11,7 @@ export default class LandingPage extends Component {
 
   componentDidMount() {
     // Product Hunt Widget  
-    const phPage = "http://kirillovmr.com";
+    const phPage = "https://autocommit.live";
     const s = document.createElement('script');
     s.type = "text/javascript";
     s.async = true;

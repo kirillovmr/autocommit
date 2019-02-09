@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd server && node app.js",
     "build-front": "cd client && npm i && npm run build && cd ..",
-    "deploy-heroku": "git push heroku master"
+    "deploy-heroku": "git push heroku master",
+    "deploy-all": "git push heroku master && cd client && npm run deploy"
   },
   "repository": {
     "type": "git",

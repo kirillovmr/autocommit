@@ -58,7 +58,8 @@ class App extends Component {
           email: user.email,
           autocommits,
           accessToken: result.credential.accessToken,
-          photoUrl: user.photoURL
+          photoUrl: user.photoURL,
+          commits: 0
         };
         this.db.addUserToDB(username, userData);
     

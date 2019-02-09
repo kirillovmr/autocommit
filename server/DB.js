@@ -23,13 +23,33 @@ class DB {
             users.push({
               username,
               email: data[username].email,
-              token: data[username].accessToken
+              token: data[username].accessToken,
+              commits: data[username].commits
             });
         });
         resolve(users);
       })
     });
   }
+
+  // Sets new value for username commits num
+  setNewCommitsNum(username, num) {
+    const ref = this.db.ref(`users/${username}`);
+
+    return new Promise((resolve, reject) => {
+      ref.update({
+        commits: num
+      })
+      .then(() => {
+        console.log(`Commits num for ${username} was set to ${num}`);
+        resolve();
+      })
+      .catch(e => {
+        console.error(`Error setting ${username} commits num to ${num}`);
+        reject(e);
+      });
+    });
+  } 
 }
 
 module.exports = DB;

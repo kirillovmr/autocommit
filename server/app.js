@@ -36,7 +36,16 @@ app.post('/commit', (req, res) => {
       // Generates random num of commits to do
       const num = Math.floor(Math.random() * 2 + 0.6);
 
-      runCommit(user.username, user.email, user.token, num);
+      if (num > 0) {
+        runCommit(user.username, user.email, user.token, num);
+
+        // Todo - check if commis were successfull
+        // If no - send user an email
+        db.setNewCommitsNum(user.username, user.commits + num);
+      }
+      else {
+        console.log(`${user.username} Randomly was chosen not to commit now`);
+      }
     });
 
     res.send({

@@ -33,8 +33,11 @@ app.post('/commit', (req, res) => {
     console.log('Received array of users to commit');
 
     users.forEach(user => {
-      runCommit(user.username, user.email, user.token);
-    })
+      // Generates random num of commits to do
+      const num = Math.floor(Math.random() * 2 + 0.6);
+
+      runCommit(user.username, user.email, user.token, num);
+    });
 
     res.send({
       success: true

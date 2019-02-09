@@ -13,7 +13,7 @@ const steps = [
     desc: "After Sign In you will be redirected to Autocommit Dashboard page. Press button 'Enable' and we will know that you want to make autocommits." },
   { img: require('../img/clock.png'),
     title: "Scheduled server task",
-    desc: "Once a day, Autocommit server woke up and commits into 'autocommit', authorizing itself with access token mentioned before." },
+    desc: "Once a day, Autocommit server woke up and commits into '_autocommit', authorizing itself with access token mentioned before." },
 ];
 
 function renderSteps() {

@@ -7,7 +7,7 @@ width="500px" height="500px"/>
 
 This service is used to automatically make contributions on GitHub and keep up your activity
 
-**Website**: [AutoCommit](https://kirillovmr.github.io/autocommit)
+**Website**: [Autocommit.live](https://autocommit.live)
 
 Use echo $(cat key.json) > text.txt to convert service key to JSON
 

@@ -12,8 +12,8 @@
 GITHUB_USERNAME="$1"
 GITHUB_EMAIL="$2"
 GITHUB_TOKEN="$3"
+COMMITS_NUM="$4"
 REPO_NAME="_autocommit" # Repo which will be used for auto commits
-COMMITS_PER_DAY=1 # number of auto commits per day
 
 _date=`date +%Y-%m-%d`
 _time=`date +%H:%M:%S`
@@ -54,7 +54,7 @@ git config user.email ${GITHUB_EMAIL}
 #
 # Making commits
 # # #
-for i in {1..${COMMITS_PER_DAY}}
+for i in {1..${COMMITS_NUM}}
 do
   > ${_filename}
   echo -e "Auto Commit ${_time} \n" >> ${_filename}

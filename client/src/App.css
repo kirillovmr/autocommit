@@ -40,3 +40,14 @@ a {
 .onph-container a {
   color: #fff !important;
 }
+
+.spinner-overlay {
+  position: fixed;
+  width: 100%;
+  height:100%;
+  display: flex;
+  top: 0;
+}
+.spinner-border {
+  margin: auto;
+}

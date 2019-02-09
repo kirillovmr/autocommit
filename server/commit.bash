@@ -12,11 +12,9 @@
 GITHUB_USERNAME="$1"
 GITHUB_EMAIL="$2"
 GITHUB_TOKEN="$3"
-COMMITS_NUM="$4"
+COMMITS_NUM=$4
 REPO_NAME="_autocommit" # Repo which will be used for auto commits
 
-_date=`date +%Y-%m-%d`
-_time=`date +%H:%M:%S`
 _filename="auto.md"
 _users_folder="users"
 
@@ -37,7 +35,7 @@ if ! git clone https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME
 then
   # Repo was not found on GitHub, creating
   echo 'Creating repo'
-  curl -X POST https://api.github.com/user/repos -u ${GITHUB_USERNAME}:$GITHUB_TOKEN -d '{"name":"'${REPO_NAME}'"}'
+  curl -X POST https://api.github.com/user/repos -u ${GITHUB_USERNAME}:$GITHUB_TOKEN -d '{"name":"'${REPO_NAME}'", "private":"true"}'
 
   if ! git clone https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
   then  
@@ -54,13 +52,23 @@ git config user.email ${GITHUB_EMAIL}
 #
 # Making commits
 # # #
-for i in {1..${COMMITS_NUM}}
+for (( c=1; c<=$COMMITS_NUM; c++ ))
 do
+  _date=`date +%Y-%m-%d`
+  _time=`date +%H:%M:%S`
   > ${_filename}
   echo -e "Auto Commit ${_time} \n" >> ${_filename}
   git add .
   git commit -m "Auto Commit ${_date} ${_time}"
   git remote add origin https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
-  git push -u origin master
-  sleep 20
+  if ! git push -u origin master
+  then
+    exit 1
+  fi
+
+  if [ ! $c -eq $COMMITS_NUM ]
+  then
+    echo "Waiting for next commit"
+    sleep 20
+  fi
 done

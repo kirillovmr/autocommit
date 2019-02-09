@@ -133,15 +133,34 @@ export default class DashboardPage extends Component {
             </div>
 
             <div className="my-3 p-3 bg-white rounded shadow">
-              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100"><span><i className="fab fa-github mr-1"></i> Connected account</span><i className="fas fa-user"></i></h6>
+              <h6 className="border-bottom border-gray pb-2 mb-0 d-flex justify-content-between w-100">
+                <span><i className="fab fa-github mr-1"></i> Connected account</span>
+                <span className="text-danger text-link" 
+                onClick={() => {
+                  /* eslint-disable */
+                  if(confirm('Are you sure want to logout?'))
+                  /* eslint-enable */
+                  this.props.logout();
+                }}>
+                  Logout
+                </span>
+              </h6>
               <div className="media text-muted pt-3">
                 <img src={this.props.user.photoURL} width="32" height="32" className="bd-placeholder-img mr-2 rounded" alt="" />
-                <p className="media-body pb-0 mb-0 small lh-125">
-                  <span className="d-flex justify-content-between align-items-center w-100">
-                    <strong className="text-gray-dark">@{this.props.user.displayName}</strong>
-                    <span className="text-danger text-link" onClick={() => this.props.logout()}>Logout</span>
+                <p className="media-body pb-0 mb-0 small lh-125 d-flex justify-content-between w-100">
+                  <span>
+                    <span>
+                      <strong className="text-gray-dark d-block">@{this.props.user.displayName}</strong>
+                      {this.props.user.email}
+                    </span>
                   </span>
-                  {this.props.user.email}
+                  <span>
+                    <strong>
+                      <span className="d-none d-md-inline-block mr-1">Commits done:</span>
+                      <span className="float-right">{this.state.dbUser.commits}</span>
+                      <span className="d-block d-sm-block d-md-none">commits</span>
+                    </strong>
+                  </span>
                 </p>
               </div>
             </div>

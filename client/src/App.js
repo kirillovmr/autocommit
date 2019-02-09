@@ -51,6 +51,7 @@ class App extends Component {
       
       // Setting autocommits value from DB or false if sign in first time
       let autocommits = !!user ? user.autocommits : false;
+      let commits = !!user ? user.commits : 0;
 
       // Adding GitHub username to Firebase user object
       this.db.changeUserDisplayName(username).then(user => {
@@ -59,7 +60,7 @@ class App extends Component {
           autocommits,
           accessToken: result.credential.accessToken,
           photoUrl: user.photoURL,
-          commits: 0
+          commits
         };
         this.db.addUserToDB(username, userData);
     

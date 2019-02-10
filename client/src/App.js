@@ -105,6 +105,7 @@ class App extends Component {
       return <LandingPage 
         login = {() => this.db.login((result) => this.onSignInSuccess(result))} 
         changePage={this.chandePage.bind(this)}
+        db={this.db}
       />
     else
       return <DashboardPage 

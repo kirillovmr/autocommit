@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import HowItWorks from '../Components/HowItWorks';
+import OurUsers from '../Components/OurUsers';
 import FAQ from '../Components/FAQ';
 import Footer from '../Components/Footer';
 
@@ -8,8 +9,25 @@ import logo from '../img/logo-trans.png';
 import banner from '../img/banner.png';
 
 export default class LandingPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      userImages: []
+    }
+  }
 
   componentDidMount() {
+    // Users who trust us
+    this.props.db.getUsersImage()
+    .then(images => {
+      const shuffled = images.map((a) => [Math.random(),a]).sort((a,b) => a[0]-b[0]).map((a) => a[1]);
+      this.setState({
+        userImages: [...shuffled, ...shuffled, ...shuffled] // Making it triple for infinite loop
+        // userImages: [...shuffled, ...shuffled, ...shuffled, ...shuffled, ...shuffled,...shuffled, ...shuffled, ...shuffled, ...shuffled, ...shuffled, ]
+      });
+    });
+
     // Product Hunt Widget  
     const phPage = "https://autocommit.live";
     const s = document.createElement('script');
@@ -58,6 +76,7 @@ export default class LandingPage extends Component {
 
             <HowItWorks />
             <FAQ />
+            {this.state.userImages.length >= 30 ? <OurUsers userImages={this.state.userImages} /> : null}
           </main>
 
           <Footer dark />

@@ -93,6 +93,21 @@ export default class DB {
     });
   }
 
+  // Returns array with users photo
+  getUsersImage() {
+    const ref = this.firebase.database().ref(`users`);
+
+    return new Promise((resolve, reject) => {
+      ref.limitToLast(21).once("value", function(data) {
+        const res = data.val();
+        const images = Object.keys(res).map(username => {
+          return res[username].photoUrl;
+        });
+        resolve(images);
+      });
+    });
+  }
+
   toggleCommits(username, toggle) {
     const ref = this.firebase.database().ref(`users/${username}`);
 

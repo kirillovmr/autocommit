@@ -3,7 +3,7 @@ import uuidv1 from 'uuid/v1';
 
 const faq = [
   { q: "How do Autocommit work?",
-    a: <span>Our server is scheduled to run once/day and get from database info about which account has enabled autocommits, then it performs couple of commits directly to 'autocommit' repo.</span> },
+    a: <span>Our server is scheduled to run once/day and get from database info about which account has enabled autocommits, then it performs couple of commits directly to '_autocommit' repo.</span> },
   { q: "What if I want to disable autocommits?",
     a: <span>You can switch off automatic contributions for your account anytime by disabling it in Autocommit Dashboard. Vice versa, you can enable it back anytime.</span> },
   { q: "How can I know which actions will you perform with my authorized token?",

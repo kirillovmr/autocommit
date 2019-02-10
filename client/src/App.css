@@ -51,3 +51,16 @@ a {
 .spinner-border {
   margin: auto;
 }
+
+@keyframes slide {
+  100% { 
+    transform: translateX(-600px);  
+  }
+}
+
+.slider-outer {
+  position: relative;
+  width: 1000px;
+  animation: slide 30s linear infinite;
+  animation-fill-mode: forwards;
+}

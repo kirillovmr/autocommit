@@ -45,6 +45,7 @@ app.post('/commit', (req, res) => {
         .catch(msg => {
           // TODO - send user an email
           console.log(`@${user.username}`, msg);
+          db.setNewErrorsNum(user.username, user.errors + 1);
         });
       }
       else {

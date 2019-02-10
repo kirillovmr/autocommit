@@ -19,6 +19,9 @@ function runCommit(username, email, token, num) {
           case 1:
             msg = `Unable push to repo. Happens wjen repo is but not limited to 'archived'`;
             break;
+          case 2:
+            msg = `Error clonning repo second time. Access token is invalid. Relogin in autocommit'`;
+            break;
           default:
             msg = `Undefined error happened. Something in commit.bash, code ${code}`;
             break;

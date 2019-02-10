@@ -24,7 +24,8 @@ class DB {
               username,
               email: data[username].email,
               token: data[username].accessToken,
-              commits: data[username].commits
+              commits: data[username].commits,
+              errors: data[username].errors || 0
             });
         });
         resolve(users);
@@ -38,7 +39,8 @@ class DB {
 
     return new Promise((resolve, reject) => {
       ref.update({
-        commits: num
+        commits: num,
+        errors: 0
       })
       .then(() => {
         console.log(`Commits num for ${username} was set to ${num}`);
@@ -46,6 +48,24 @@ class DB {
       })
       .catch(e => {
         console.error(`Error setting ${username} commits num to ${num}`);
+        reject(e);
+      });
+    });
+  } 
+
+  setNewErrorsNum(username, num) {
+    const ref = this.db.ref(`users/${username}`);
+
+    return new Promise((resolve, reject) => {
+      ref.update({
+        errors: num
+      })
+      .then(() => {
+        console.log(`Errors num for ${username} was set to ${num}`);
+        resolve();
+      })
+      .catch(e => {
+        console.error(`Error setting ${username} errors num to ${num}`);
         reject(e);
       });
     });

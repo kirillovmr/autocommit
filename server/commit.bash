@@ -31,16 +31,16 @@ cd "${_users_folder}/${GITHUB_USERNAME}"
 #
 # Clonning and setting up repo
 # # #
-if ! git clone https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
+if ! GIT_TERMINAL_PROMPT=0 git clone https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
 then
   # Repo was not found on GitHub, creating
   echo 'Creating repo'
   curl -X POST https://api.github.com/user/repos -u ${GITHUB_USERNAME}:$GITHUB_TOKEN -d '{"name":"'${REPO_NAME}'", "private":"true"}'
+  sleep 3
 
-  if ! git clone https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
+  if ! GIT_TERMINAL_PROMPT=0 git clone https://${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${REPO_NAME}.git
   then  
-    echo 'Error clonning repo second time'
-    exit
+    exit 2
   fi
 fi
 
@@ -69,6 +69,6 @@ do
   if [ ! $c -eq $COMMITS_NUM ]
   then
     echo "Waiting for next commit"
-    sleep 20
+    sleep 15
   fi
 done

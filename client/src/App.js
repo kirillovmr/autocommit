@@ -43,7 +43,7 @@ class App extends Component {
 
   onSignInSuccess(result) {
     const username = result.additionalUserInfo.username;
-    console.log('📦 Sign in');
+    // console.log('📦 Sign in');
 
     // Try to find user in db
     this.db.getUserFromDB(username)

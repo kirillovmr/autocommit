@@ -15,7 +15,6 @@ export default class DashboardPage extends Component {
     super(props);
 
     this.state = {
-      // autocommits: false,
       dbUser: {
         autocommits: false
       },
@@ -24,12 +23,11 @@ export default class DashboardPage extends Component {
   }
 
   componentDidMount() {
-    console.log('👍 Did Mount run');
     const username = this.props.user.displayName;
 
     this.props.db.getUserFromDB(username)
     .then((dbUser) => {
-      console.log('📡 dbUser got', dbUser);
+      // console.log('📡 dbUser got', dbUser);
       if (!dbUser) return this.componentDidMount();
       this.setState({
         dbUser

@@ -23,7 +23,7 @@ export default class DB {
     provider.addScope('repo');
     firebase.auth().signInWithPopup(provider)
     .then((result) => {
-      console.log('User successfully logged in.');
+      // console.log('User successfully logged in.');
       this.user = result.user;
       success(result);
     })
@@ -36,7 +36,7 @@ export default class DB {
   logout(success=()=>{}, error=()=>{}) {
     this.firebase.auth().signOut()
     .then(() => {
-      console.log('User logged out');
+      // console.log('User logged out');
       this.user = null;
       success();
     })
@@ -54,7 +54,7 @@ export default class DB {
       user.updateProfile({
         displayName: newName
       }).then(function() {
-        console.log('Display name successfully changed');
+        // console.log('Display name successfully changed');
         resolve(user);
       }, function(e) {
         console.error('Error changing display name', e);
@@ -72,7 +72,7 @@ export default class DB {
       }
     })
     .then(() => {
-      console.log(`DB ${username} successfully added to database`);
+      // console.log(`DB ${username} successfully added to database`);
       success();
     })
     .catch(e => {
@@ -87,7 +87,6 @@ export default class DB {
 
     return new Promise((resolve, reject) => {
       ref.once("value", function(data) {
-        console.log(`Found ${username}`);
         resolve(data.val());
       });
     });
@@ -116,7 +115,7 @@ export default class DB {
         autocommits: toggle
       })
       .then(() => {
-        console.log(`Autocommits for ${username} was set to ${toggle}`);
+        // console.log(`Autocommits for ${username} was set to ${toggle}`);
         resolve();
       })
       .catch(e => {

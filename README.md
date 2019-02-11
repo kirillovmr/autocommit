@@ -1,14 +1,15 @@
-# GitHub Auto-commit
+# Autocommit - GitHub Activity Keeper
 
 <p align="center">
-<img src="./client/src/img/banner.png" />
+<img src="https://habrastorage.org/webt/vr/bt/vt/vrbtvtlq5bulq5incmteahnkjn4.png" />
 </p>
 
-This service is used to automatically make contributions on GitHub and keep up your activity
+Autocommit is your way to look more professionally on GitHub. 
+It will make contributions every day (or when you will specify) in a private repo, so that your activity dashboard will remain green always!
+
+Please share your comments & reviews and suggestions! We are planning to reach every user.
 
 **Website**: [Autocommit.live](https://autocommit.live)
-
-Use echo $(cat key.json) > text.txt to convert service key to JSON
 
 ## Author
 

@@ -59,8 +59,12 @@ a {
 }
 
 .slider-outer {
-  position: relative;
+  /* position: relative; */
   width: 1000px;
-  animation: slide 30s linear infinite;
+  animation: slide 40s linear infinite;
   animation-fill-mode: forwards;
+}
+
+.slider-outer img {
+  min-width: 32px;
 }

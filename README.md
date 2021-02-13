@@ -9,7 +9,7 @@ It will make contributions every day (or when you will specify) in a private rep
 
 Please share your comments & reviews and suggestions! We are planning to reach every user.
 
-**Website**: [Autocommit.live](https://autocommit.live)
+**Website**: [kirillovmr.github.io/autocommit](https://kirillovmr.github.io/autocommit/)
 
 ## Author
 
